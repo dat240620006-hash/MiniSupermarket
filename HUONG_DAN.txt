@@ -1,0 +1,19 @@
+HƯỚNG DẪN CHẠY - MiniSupermarket Buổi 2 (JWT)
+
+1. Giải nén, double-click MiniSupermarket.sln (mở bằng Visual Studio 2022).
+2. Nếu dùng .NET 10: đổi <TargetFramework> trong 2 file .csproj
+   (net8.0 -> net10.0, net8.0-windows -> net10.0-windows) và nâng version NuGet lên 10.x.
+3. Chuột phải Solution -> Configure Startup Projects -> chọn "Multiple startup projects":
+   MiniSupermarket.API = Start, MiniSupermarket.WinForms = Start (API để trên WinForms).
+   Hoặc: chạy API (F5) trước, rồi chuột phải WinForms -> Debug -> Start New Instance.
+4. Port API: 7123 (trong Properties/launchSettings.json).
+   Nếu khác, sửa SessionManager.ApiBaseUrl trong WinForms.
+5. Tài khoản: admin/123456 (Admin), cashier/123456 (Cashier).
+
+TEST TRÊN SWAGGER:
+ - GET /api/categories khi chưa login -> 401
+ - POST /api/auth/login (cashier) -> copy token -> nút Authorize -> "Bearer <token>"
+ - GET /api/categories/staff-pos -> 200 ; GET /api/categories/admin-dashboard -> 403
+ - DELETE /api/categories/1 bằng cashier -> 403, bằng admin -> 204
+
+Nếu lỗi SSL: dotnet dev-certs https --trust
